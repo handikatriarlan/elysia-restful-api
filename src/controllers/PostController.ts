@@ -34,3 +34,29 @@ export async function createPost(options: { title: string; content: string }) {
     console.error(`Error creating post: ${e}`)
   }
 }
+
+export async function getPostById(id: string) {
+  try {
+    const postId = parseInt(id)
+
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+    })
+
+    if (!post) {
+      return {
+        success: true,
+        message: "Detail Data Post Not Found!",
+        data: null,
+      }
+    }
+
+    return {
+      success: true,
+      message: `Detail Data Post By ID : ${id}`,
+      data: post,
+    }
+  } catch (e: unknown) {
+    console.error(`Error finding post: ${e}`)
+  }
+}
