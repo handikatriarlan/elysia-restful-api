@@ -85,6 +85,11 @@ export async function updatePost(
     }
   } catch (e: unknown) {
     console.error(`Error updating post: ${e}`)
+    return {
+      success: false,
+      message: "Post Not Found!",
+      data: null,
+    }
   }
 }
 
@@ -102,5 +107,10 @@ export async function deletePost(id: string) {
     }
   } catch (e: unknown) {
     console.error(`Error deleting post: ${e}`)
+    return {
+      success: false,
+      message: "Post Not Found!",
+      data: null,
+    }
   }
 }
