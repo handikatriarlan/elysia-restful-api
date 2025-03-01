@@ -4,6 +4,7 @@ import {
   createPost,
   getPostById,
   getPosts,
+  updatePost,
 } from "../controllers/PostController"
 
 const Routes = new Elysia({ prefix: "/posts" })
@@ -25,5 +26,22 @@ const Routes = new Elysia({ prefix: "/posts" })
     }
   )
   .get("/:id", ({ params: { id } }) => getPostById(id))
+  .patch(
+    "/:id",
+    ({ params: { id }, body }) =>
+      updatePost(id, body as { title?: string; content?: string }),
+    {
+      body: t.Object({
+        title: t.String({
+          minLength: 3,
+          maxLength: 100,
+        }),
+        content: t.String({
+          minLength: 3,
+          maxLength: 1000,
+        }),
+      }),
+    }
+  )
 
 export default Routes
